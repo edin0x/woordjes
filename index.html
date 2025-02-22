@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Woordjes Oefenen</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      position: relative;
+      overflow: hidden;
+    }
+    #word {
+      font-size: 200px;
+      text-align: center;
+      user-select: none;
+    }
+    #nextBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="word">Klik op "Volgend" om te starten!</div>
+  <button id="nextBtn">Volgend</button>
+
+  <script>
+    const words = [
+      "kat", "vis", "zon", "dag", "bed", "jas", "bol", "ijs", "bij", "mes",
+      "tas", "pen", "pot", "kop", "zak", "oor", "arm", "kip", "eik", "gat",
+      "weg", "hut", "gas", "rol", "pad", "rug", "bok", "zee", "bus", "bel",
+      "erf", "mis", "vet", "tik", "dak", "mop", "net", "pil", "rok", "fop",
+      "bom", "sok", "aap", "eer", "bal", "lip", "van", "tot", "met", "zij",
+      "wat", "wie", "ook", "lei", "zin", "rit", "wij", "gel", "wet", "koe",
+      "uil", "ben", "lid", "zit", "kar", "was", "top", "dom", "ooi", "ram",
+      "kit", "aan", "uit", "als", "wel", "zei", "had", "ton", "boe", "rap",
+      "via", "fee", "rot", "eet", "rij", "kam", "gum", "pit", "sap", "moe",
+      "puf", "vat", "wil", "lek", "sop", "lap", "tak", "ros", "wip", "nek"
+    ];
+
+    let currentIndex = 0;
+
+    function showNextWord() {
+      if (currentIndex >= words.length) {
+        currentIndex = 0; // Herstart de lijst als we aan het einde zijn.
+      }
+      document.getElementById("word").textContent = words[currentIndex];
+      currentIndex++;
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", showNextWord);
+
+    // Gebruik de spatiebalk om naar het volgende woord te gaan.
+    document.addEventListener("keydown", function(event) {
+      if (event.key === " ") {
+        event.preventDefault();
+        showNextWord();
+      }
+    });
+
+    // Swipe-functionaliteit voor mobiele apparaten
+    let touchstartX = 0;
+    let touchendX = 0;
+    const threshold = 50; // Minimum horizontale afstand in pixels om als swipe te beschouwen
+
+    document.addEventListener("touchstart", function(event) {
+      touchstartX = event.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener("touchend", function(event) {
+      touchendX = event.changedTouches[0].screenX;
+      if (Math.abs(touchstartX - touchendX) > threshold) {
+        showNextWord();
+      }
+    }, false);
+  </script>
+</body>
+</html>
